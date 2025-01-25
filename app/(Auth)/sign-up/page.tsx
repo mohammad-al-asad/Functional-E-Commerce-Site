@@ -14,17 +14,17 @@ import React, { useEffect } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { account } from "@/lib/Appwrite";
+import useAppwrite from "@/lib/Appwrite";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { setUser } from "@/lib/redux/AuthSlice";
+
 
 function Page() {
   const { toast } = useToast();
   const router = useRouter();
-  const dispatch = useDispatch();
+  const {signup} = useAppwrite()
   const user = useSelector((state: any) => state.auth.user);
   useEffect(() => {
     if (user) {
@@ -43,19 +43,8 @@ function Page() {
   });
 
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    values.phone = "+880" + values.phone;
     try {
-      await account.create(
-        Date.now().toString(),
-        values.email,
-        values.password,
-        values.username
-      );
-      await account.createEmailPasswordSession(values.email, values.password);
-      await account.updatePhone(values.phone, values.password);
-      const user = await account.get();
-      dispatch(setUser(user));
-
+      await signup(values)
       toast({
         title: "Account created successfully",
       });
@@ -87,7 +76,7 @@ function Page() {
                   <FormItem>
                     <FormLabel className="text-white">Username:</FormLabel>
                     <FormControl>
-                      <Input placeholder="enter your name" {...field} />
+                      <Input placeholder="Enter your name" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,7 +112,7 @@ function Page() {
                     <FormControl>
                       <Input
                         type="email"
-                        placeholder="enter your email"
+                        placeholder="Enter your email"
                         {...field}
                       />
                     </FormControl>
@@ -144,7 +133,7 @@ function Page() {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="enter your password"
+                        placeholder="Enter your password"
                         {...field}
                       />
                     </FormControl>
@@ -167,7 +156,7 @@ function Page() {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="confirm your password"
+                        placeholder="Confirm your password"
                         {...field}
                       />
                     </FormControl>

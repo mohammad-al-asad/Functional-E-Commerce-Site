@@ -1,20 +1,26 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { IoLocationOutline } from "react-icons/io5";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import AddressForm from "./AddressForm";
+import { RootState } from "@/lib/redux";
+import { useSelector } from "react-redux";
 
 function TotalCart() {
+  const [user, setUser] = useState<any>(null);
+  const authUser: any = useSelector((state: RootState) => state.auth.user);
+  useEffect(() => {
+    setUser(authUser);
+  }, [authUser]);
   return (
-    <div className="w-[35%] h-fit bg-[#fafafa] p-6 text-sm space-y-5">
-      <p className="mb-3">Location</p>
-      <div className="space-y-8">
-        <div className="flex gap-3 items-center">
-          <IoLocationOutline className="text-2xl" />
-          <div className="text-sm">
-            <p>Dhaka, Dhaka North, Banani</p>
-            <p>Road No. 12 - 19</p>
-          </div>
-        </div>
-      </div>
-      <h2 className="text-xl font-semibold pt-2">Order Summary</h2>
+    <div className="w-[35%] h-fit bg-main text-white p-6 text-sm rounded-lg">
+      <p className="mb-2">Total</p>
+
+      <AddressForm user={user} setUser={setUser} />
+
+      <div className="space-y-3">
+      <h2 className="text-lg font-semibold">Order Summary</h2>
       <div className="flex justify-between">
         <p>Subtotal (0 items)</p>
         <p className="font-semibold">$ 0</p>
@@ -26,23 +32,29 @@ function TotalCart() {
       </div>
 
       <form>
-        <input
-          className="border-2 p-2 focus:outline-none"
-          type="text"
-          placeholder="Enter Voucher Code"
-        />
-        <button className="w-20 bg-[#01a4d6] mt-2 ml-1 p-2 text-white" type="submit">
-          Apply
-        </button>
+        <div className="flex">
+          <Input type="text" placeholder="Enter Voucher Code" />
+          <Button
+            className="bg-blue-500 hover:bg-blue-400 ml-2 text-white"
+            type="submit"
+          >
+            Apply
+          </Button>
+        </div>
       </form>
 
       <div className="flex justify-between">
         <p>Total</p>
         <p className="font-semibold">$ 0</p>
       </div>
-      <button className="w-full bg-main ml-2 p-2 text-white" type="submit">
+      <Button
+        variant="outline"
+        className="w-full bg-main ml-2 p-2 text-white"
+        type="submit"
+      >
         PROCCED TO CHECKOUT(0)
-      </button>
+      </Button>
+      </div>
     </div>
   );
 }

@@ -1,26 +1,25 @@
-import React from "react";
-import { IoLocationOutline } from "react-icons/io5";
+import React, { useEffect, useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiMoneyWithdraw } from "react-icons/bi";
 import { TbTruckReturn } from "react-icons/tb";
 import { TbNotesOff } from "react-icons/tb";
+import AddressForm from "./AddressForm";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux";
 
 function DeliveryDetails() {
+    const [user, setUser] = useState<any>(null);
+    const authUser: any = useSelector((state: RootState) => state.auth.user);
+    useEffect(() => {
+      setUser(authUser);
+    }, [authUser]);
   return (
-    <div className="w-[30%] bg-[#fafafa] p-5 text-sm">
+    <div className="w-[30%] bg-main text-white ml-5 rounded-lg p-5 text-sm">
         <p className="mb-3">Delivery</p>
-      <div className="space-y-8">
+      <div>
+        <AddressForm user={user} setUser={setUser}/>
 
-        <div className="flex gap-3 items-center">
-          <IoLocationOutline className="text-2xl" />
-          <div className="text-sm">
-            <p>Dhaka, Dhaka North, Banani</p>
-            <p>Road No. 12 - 19</p>
-          </div>
-          <button className="text-[#01a4d6] ml-2">Change</button>
-        </div>
-
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3 items-center mb-4">
           <TbTruckDelivery className="text-2xl" />
           <div className="text-sm">
             <p>

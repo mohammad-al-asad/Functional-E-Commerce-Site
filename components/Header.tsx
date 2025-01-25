@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { RootState } from "@/lib/redux";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 function Header() {
   const [search, setSearch] = useState<string>("");
@@ -20,14 +21,17 @@ function Header() {
     e.preventDefault();
     router.push(`/search/${search}`);
   };
-  
+
   return (
     <div className="bg-main flex p-2 justify-center items-center gap-8">
       <div className="flex">
         <div className="w-max h-full p-4 pr-1">
           <h1 className="text-red-600 font-[1000] text-3xl">|</h1>
         </div>
-        <div onClick={() => router.push("/")} className="w-max p-4 pl-0">
+        <div
+          onClick={() => router.push("/")}
+          className="w-max p-4 pl-0 cursor-pointer"
+        >
           <h1 className="text-white font-[700] text-3xl">THE COMMERCE</h1>
         </div>
       </div>
@@ -52,12 +56,17 @@ function Header() {
           //  For user //
           <Link
             href="/profile"
-            className="flex justify-center items-center gap-1 text-white"
+            className="flex justify-center items-center gap-1.5 text-white"
           >
-            <CgProfile size={30} />
-            <p className="w-20 truncate overflow-hidden whitespace-nowrap">
-              {user.name}
-            </p>
+            <div className="w-[38px] h-[38px] relative">
+              <Image
+                fill
+                className="rounded-full object-fill"
+                src={user.avatar}
+                alt={user.name}
+              />
+            </div>
+            <p className="w-20 text-md truncate">{user.name}</p>
           </Link>
         ) : (
           //  For guest //

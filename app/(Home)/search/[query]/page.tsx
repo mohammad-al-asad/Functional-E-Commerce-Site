@@ -1,5 +1,5 @@
 "use client";
-import useProduct from "@/hooks/product";
+import useProduct from "@/hooks/useProduct";
 import { useParams } from "next/navigation";
 import Result from "@/components/Result";
 import React, { useEffect, useRef } from "react";
@@ -16,7 +16,7 @@ function Query() {
   return (
     <div className="p-2">
       {loading ? (
-        <Loadder/>
+        <Loadder />
       ) : error ? (
         <h2 className="text-center text-xl font-bold text-white">
           There was an error.

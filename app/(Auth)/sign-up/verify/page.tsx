@@ -10,17 +10,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useForm } from "react-hook-form";
-import { useParams, useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { account } from "@/lib/Appwrite";
 import { useToast } from "@/hooks/use-toast";
 import { useSelector } from "react-redux";
 
 function Page() {
-  const { phone }: { phone: string } = useParams();
   const router = useRouter();
   const { toast } = useToast();
   const [userId, setUserId] = useState<string>("");
@@ -90,7 +89,7 @@ function Page() {
                   <FormItem>
                     <FormLabel className="text-white">OTP:</FormLabel>
                     <FormControl>
-                      <Input placeholder="enter the otp code" {...field} />
+                      <Input placeholder="Enter the otp code" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

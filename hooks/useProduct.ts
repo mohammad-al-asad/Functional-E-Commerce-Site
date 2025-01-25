@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Query } from "appwrite";
 import { databases, db } from "@/lib/Appwrite";
 
-const collection = "678071e2002d6fc2a823"
+const productCollection = "678071e2002d6fc2a823"
 export default function useProduct() {
   const [allData, setAllData] = useState<any>([]);
   const [filteredData, setFilteredData] = useState<any>([]);
@@ -14,7 +14,7 @@ export default function useProduct() {
     setError(false);
     setLoading(true);
     try{
-      const { documents } = await databases.listDocuments(db,collection);
+      const { documents } = await databases.listDocuments(db,productCollection);
       setAllData(documents);
       setLoading(false);
     }catch(error:any){
@@ -28,7 +28,7 @@ export default function useProduct() {
     setError(false);
     setLoading(true);
     try {
-      const {documents} = await databases.listDocuments(db,collection,[Query.search("title",query)]);
+      const {documents} = await databases.listDocuments(db,productCollection,[Query.search("title",query)]);
       setFilteredData(documents);
       setLoading(false);
     } catch (error:any) {
@@ -42,7 +42,7 @@ export default function useProduct() {
     setError(false);
     setLoading(true);
     try {
-      const document = await databases.getDocument(db,collection,id);
+      const document = await databases.getDocument(db,productCollection,id);
       setSingleData(document);
       
       setLoading(false);

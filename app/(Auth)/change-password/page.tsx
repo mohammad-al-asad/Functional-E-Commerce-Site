@@ -13,65 +13,69 @@ import React, { useEffect } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { signinSchema } from "@/schemas/signin";
-import Link from "next/link";
-import useAppwrite from "@/lib/Appwrite";
+import { useRouter, useSearchParams } from "next/navigation";
+import useAppwrite, { account } from "@/lib/Appwrite";
 import { useToast } from "@/hooks/use-toast";
-import { useSelector } from "react-redux";
+import { changePasswordSchema } from "@/schemas/changePassword";
+import Error from "next/error";
 
 function Page() {
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
+  const secret = searchParams.get("secret");
   const { toast } = useToast();
   const router = useRouter();
-  const {signin} = useAppwrite()
-  const user = useSelector((state: any) => state.auth.user);
-  useEffect(() => {
-    if (user) {
-      router.push("/");
-    }
-  }, [router, user]);
-  const form = useForm<z.infer<typeof signinSchema>>({
-    resolver: zodResolver(signinSchema),
+  const {signout} = useAppwrite()
+
+  const form = useForm<z.infer<typeof changePasswordSchema>>({
+    resolver: zodResolver(changePasswordSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof signinSchema>) {
+  async function onSubmit(values: z.infer<typeof changePasswordSchema>) {
     try {
-      await signin(values);
+      if (userId && secret)
+        await account.updateRecovery(userId, secret, values.newPassword);
       toast({
-        title: "Login successful",
+        title: "Password changed successfully",
       });
-      router.push("/");
+      signout();
+      router.replace("/sign-in");
     } catch (error: any) {
       console.log(error.message);
       toast({
-        title: "Failed to login",
+        title: "Failed to change password",
         description: error.message,
         variant: "destructive",
       });
     }
   }
+
+  if (!userId || !secret) {
+    return <Error statusCode={404} />;
+  }
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-800">
       <div className="w-[28%] bg-main px-9 py-12 rounded-2xl m-auto">
         <h1 className="text-3xl block text-red-500 font-extrabold mb-2">
-          Login Now
+          Password Reset
         </h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            {/* email */}
+            {/* New Password */}
             <div className="mt-3">
               <FormField
                 control={form.control}
-                name="email"
+                name="newPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-white">Email:</FormLabel>
+                    <FormLabel className="text-white">New Password:</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your email" {...field} />
+                      <Input placeholder="enter a new password" {...field} type="password" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -79,18 +83,18 @@ function Page() {
               />
             </div>
 
-            {/* password */}
+            {/* Confirm Password */}
             <div className="mt-3">
               <FormField
                 control={form.control}
-                name="password"
+                name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-white">Password:</FormLabel>
+                    <FormLabel className="text-white">Confirm Password:</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="confirm your password"
                         {...field}
                       />
                     </FormControl>
@@ -104,19 +108,11 @@ function Page() {
                 className="w-full mx-auto bg-red-500 hover:bg-red-400"
                 type="submit"
               >
-                Login
+                Save
               </Button>
             </div>
           </form>
         </Form>
-        <div className="mt-4">
-          <p className="text-gray-500 text-sm text-center">
-            Don&lsquo;t have an account?{"  "}
-            <Link className="text-blue-500" href={"/sign-up"}>
-              |Sign up|
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );
