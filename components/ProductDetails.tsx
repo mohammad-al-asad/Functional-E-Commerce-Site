@@ -6,22 +6,25 @@ import { useToast } from "@/hooks/use-toast";
 import { AppDispatch, RootState } from "@/lib/redux";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
+import { debouncer } from "@/helpers/debouncer";
+import { useRouter } from "next/navigation";
+import { putItems } from "@/lib/redux/SelectedCart";
 
 function ProductDetails({ product }: { product: any }) {
   const dispatch = useDispatch<AppDispatch>();
   const user: any = useSelector((state: RootState) => state.auth.user);
   const { toast } = useToast();
-  let counterId: any;
-  function addItem() {
+  const router = useRouter();
+
+  async function addItem() {
     try {
-      clearTimeout(counterId);
-      counterId = setTimeout(async () => {
-        dispatch(addToCart({ product, userId: user.$id }));
+      debouncer(async () => {
+        await dispatch(addToCart({ product, userId: user.$id }));
 
         toast({
           title: "Added to cart",
         });
-      }, 800);
+      })();
     } catch (error: any) {
       toast({
         title: "Error adding to cart",
@@ -41,9 +44,21 @@ function ProductDetails({ product }: { product: any }) {
 
         <h1 className="text-main text-3xl font-semibold">{`$${product.price}`}</h1>
         <div className="buttons flex gap-5">
-          <Button className="bg-blue-500 w-60 hover:bg-blue-400">Buy Now</Button>
           <Button
-          variant="outline"
+            onClick={() => {
+              dispatch(
+                putItems([
+                  { product: { ...product }, count: 1, userId: user.$id, isSelected:true},
+                ])
+              );
+              router.push("/checkout");
+            }}
+            className="bg-blue-500 w-60 hover:bg-blue-400"
+          >
+            Buy Now
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => {
               if (user) {
                 addItem();

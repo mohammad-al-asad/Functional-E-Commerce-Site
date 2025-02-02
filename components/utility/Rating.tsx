@@ -9,7 +9,7 @@ function Rating({rating}:{rating:any}) {
       {Array(parseInt(rating[0]))
         .fill(1)
         .map((_,index) => (
-          <FaStar className="text-orange-400" key={index} />
+          <FaStar className="text-orange-400 w-3.5" key={index} />
         ))}
         {rating && <span className="ml-2 text-sm">{`(${rating[1]})`}</span>}
     </div>

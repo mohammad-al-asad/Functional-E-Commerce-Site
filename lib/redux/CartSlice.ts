@@ -4,6 +4,7 @@ import { databases, db } from "../Appwrite";
 import { Query } from "appwrite";
 
 const cartCollection = "678133af000887a2b6ef";
+
 interface cartType {
   cart: any[];
 }
@@ -19,11 +20,10 @@ export const fetchCart = createAsyncThunk(
       const { documents } = await databases.listDocuments(db, cartCollection, [
         Query.equal("userId", userId),
       ]);
-
       return documents;
     } catch (error: any) {
-      console.log(error);
-      thunkApi.rejectWithValue(error.message);
+      console.error(error);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
@@ -48,8 +48,8 @@ export const addToCart = createAsyncThunk(
         );
         return updatedCart;
       } catch (error: any) {
-        console.log(error.message);
-        rejectWithValue(error.message);
+        console.error(error);
+        return rejectWithValue(error.message);
       }
     } else {
       try {
@@ -65,9 +65,106 @@ export const addToCart = createAsyncThunk(
         );
         return newCart;
       } catch (error: any) {
-        console.log(error.message);
-        rejectWithValue(error.message);
+        console.error(error);
+        return rejectWithValue(error.message);
       }
+    }
+  }
+);
+
+export const toggleIsSelected = createAsyncThunk(
+  "cart/toggleIsSelected",
+  async (cartId: string, { getState, rejectWithValue }) => {
+    const state: any = getState();
+    const cartItem = state.cart.cart.find((item: any) => item.$id === cartId);
+    if (cartItem) {
+      try {
+        const {isSelected} = await databases.getDocument(db,cartCollection,cartId)
+        const updatedCart = await databases.updateDocument(
+          db,
+          cartCollection,
+          cartId,
+          {
+            isSelected: !isSelected,
+          }
+        );
+        return updatedCart;
+      } catch (error: any) {
+        console.error(error);
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const increaseCounter = createAsyncThunk(
+  "cart/increaseCounter",
+  async (cartId: string, { getState, rejectWithValue }) => {
+    const state: any = getState();
+    const cartItem = state.cart.cart.find((item: any) => item.$id === cartId);
+    if (cartItem) {
+      try {
+        const updatedCart = await databases.updateDocument(
+          db,
+          cartCollection,
+          cartId,
+          {
+            count: cartItem.count + 1,
+          }
+        );
+        return updatedCart;
+      } catch (error: any) {
+        console.error(error);
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const decreaseCounter = createAsyncThunk(
+  "cart/decreaseCounter",
+  async (cartId: string, { getState, rejectWithValue }) => {
+    const state: any = getState();
+    const cartItem = state.cart.cart.find((item: any) => item.$id === cartId);
+    
+    if (cartItem) {
+      if (cartItem.count > 1) {
+        try {
+          const updatedCart = await databases.updateDocument(
+            db,
+            cartCollection,
+            cartId,
+            {
+              count: cartItem.count - 1,
+            }
+          );
+          return cartId;
+        } catch (error: any) {
+          console.error(error);
+          return rejectWithValue(error.message);
+        }
+      } else {
+        try {
+          await databases.deleteDocument(db, cartCollection, cartId);
+          return cartId;
+        } catch (error: any) {
+          console.error(error);
+          return rejectWithValue(error.message);
+        }
+      }
+    }
+  }
+);
+
+export const removeCart = createAsyncThunk(
+  "cart/removeCart",
+  async (cartId: string, { rejectWithValue }) => {
+    try {
+      await databases.deleteDocument(db, cartCollection, cartId);
+      return cartId;
+    } catch (error: any) {
+      console.error(error);
+      return rejectWithValue(error.message);
     }
   }
 );
@@ -75,51 +172,11 @@ export const addToCart = createAsyncThunk(
 const cartSlice = createSlice({
   name: "cart",
   initialState,
-  reducers: {
-    increaseCounter: (state, action) => {
-      state.cart.forEach((item: any) => {
-        if (action.payload === item.$id) {
-          item.count += 1;
-          databases
-            .updateDocument(db, cartCollection, action.payload, {
-              count: item.count,
-            })
-            .catch(console.log);
-        }
-      });
-    },
-    decreaseCounter: (state, action) => {
-      state.cart.forEach((item: any) => {
-        if (action.payload === item.$id) {
-          if (item.count > 1) {
-            item.count -= 1;
-            databases
-              .updateDocument(db, cartCollection, action.payload, {
-                count: item.count,
-              })
-              .catch(console.log);
-          } else {
-            const index = state.cart.indexOf(item);
-            state.cart.splice(index, 1);
-            databases
-              .deleteDocument(db, cartCollection, action.payload)
-              .catch(console.log);
-          }
-        }
-      });
-    },
-
-    removeCart: (state, action) => {
-      state.cart = state.cart.filter((item: any) => {
-        return item.$id !== action.payload;
-      });
-
-      databases
-        .deleteDocument(db, cartCollection, action.payload)
-        .catch(console.log);
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchCart.fulfilled, (state, action) => {
+      if (action.payload) state.cart = action.payload;
+    });
     builder.addCase(addToCart.fulfilled, (state, action) => {
       const index = state.cart.findIndex(
         (item: any) => item.product?.$id === action.payload?.product.$id
@@ -131,13 +188,33 @@ const cartSlice = createSlice({
         state.cart.push(action.payload);
       }
     });
-    builder.addCase(fetchCart.fulfilled, (state, action) => {
-      if (action.payload) state.cart = action.payload;
+    builder.addCase(toggleIsSelected.fulfilled, (state, action) => {
+      const index = state.cart.findIndex((item: any) => item.$id === action.payload?.$id);
+      if (index > -1) {
+        state.cart[index] = action.payload;
+      }
+    });
+    builder.addCase(increaseCounter.fulfilled, (state, action) => {
+      const index = state.cart.findIndex((item: any) => item.$id === action.payload?.$id);
+      if (index > -1) {
+        state.cart[index] = action.payload;
+      }
+    });
+    builder.addCase(decreaseCounter.fulfilled, (state, action) => {
+      const index = state.cart.findIndex((item: any) => item.$id === action.payload);
+      if (index > -1) {
+        if (state.cart[index].count > 1) {
+          state.cart[index].count -= 1;
+        } else {
+          state.cart.splice(index, 1);
+        }
+      }
+    });
+    builder.addCase(removeCart.fulfilled, (state, action) => {
+      state.cart = state.cart.filter((item: any) => item.$id !== action.payload);
     });
   },
 });
 
-export const { removeCart, increaseCounter, decreaseCounter } =
-  cartSlice.actions;
 export const getCart = (state: RootState) => state.cart;
 export default cartSlice.reducer;

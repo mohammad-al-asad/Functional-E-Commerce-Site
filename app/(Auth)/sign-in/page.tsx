@@ -27,7 +27,7 @@ function Page() {
   const user = useSelector((state: any) => state.auth.user);
   useEffect(() => {
     if (user) {
-      router.push("/");
+      router.replace("/");
     }
   }, [router, user]);
   const form = useForm<z.infer<typeof signinSchema>>({
@@ -37,14 +37,14 @@ function Page() {
       password: "",
     },
   });
-
+  
   async function onSubmit(values: z.infer<typeof signinSchema>) {
     try {
       await signin(values);
       toast({
         title: "Login successful",
       });
-      router.push("/");
+      router.replace("/");
     } catch (error: any) {
       console.log(error.message);
       toast({

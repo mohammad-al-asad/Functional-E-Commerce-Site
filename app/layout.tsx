@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#646568]`}>
+      <body className={`${inter.className} bg-[#30383d]`}>
         <ReduxProvider>
           <CartProvider>
             {children}

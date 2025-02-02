@@ -1,5 +1,6 @@
 "use client";
-import Cart from '@/components/Cart'
+import CartItems from '@/components/CartItems';
+import TotalCart from '@/components/TotalCart';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
@@ -10,12 +11,14 @@ function CartPage() {
   
 useEffect(() => {
   if(!user){
-    router.push("/sign-in");
+    router.replace("/sign-in");
   }
 }, [router, user]);
+
   return (
-    <div>
-      <Cart/>
+    <div className="p-8 mx-24 flex justify-between h-[650px]">
+      <CartItems/>
+      <TotalCart/>
     </div>
   )
 }

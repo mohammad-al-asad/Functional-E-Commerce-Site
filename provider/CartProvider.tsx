@@ -17,7 +17,7 @@ function CartProvider({ children }: { children: ReactNode }) {
         setLoading(false);
       }
     })();
-  }, [fetch_User_Cart]);
+  }, []);
 
   if (loading) {
     return <Loadder />;

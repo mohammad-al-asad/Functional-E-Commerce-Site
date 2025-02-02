@@ -28,7 +28,7 @@ function Page() {
   const user = useSelector((state: any) => state.auth.user);
   useEffect(() => {
     if (user) {
-      router.push("/");
+      router.replace("/");
     }
   }, [router, user]);
 
@@ -48,7 +48,7 @@ function Page() {
       toast({
         title: "Account created successfully",
       });
-      router.push(`/sign-up/verify`);
+      router.replace(`/sign-up/verify`);
     } catch (error: any) {
       console.log(error.message);
       toast({

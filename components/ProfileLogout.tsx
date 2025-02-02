@@ -41,7 +41,7 @@ function ProfileLogout() {
               onClick={() => {
                 try {
                   signout();
-                  router.push("/");
+                  router.replace("/");
                 } catch (error: any) {
                   toast({
                     title: error.message,

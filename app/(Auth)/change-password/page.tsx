@@ -18,14 +18,23 @@ import useAppwrite, { account } from "@/lib/Appwrite";
 import { useToast } from "@/hooks/use-toast";
 import { changePasswordSchema } from "@/schemas/changePassword";
 import Error from "next/error";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux";
 
 function Page() {
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
   const secret = searchParams.get("secret");
+  const user = useSelector<RootState>((state) => state.auth.user);
   const { toast } = useToast();
   const router = useRouter();
-  const {signout} = useAppwrite()
+  const { signout } = useAppwrite();
+
+  useEffect(() => {
+    if (!user) {
+      router.replace("/sign-in");
+    }
+  }, [router]);
 
   const form = useForm<z.infer<typeof changePasswordSchema>>({
     resolver: zodResolver(changePasswordSchema),
@@ -75,7 +84,11 @@ function Page() {
                   <FormItem>
                     <FormLabel className="text-white">New Password:</FormLabel>
                     <FormControl>
-                      <Input placeholder="enter a new password" {...field} type="password" />
+                      <Input
+                        placeholder="enter a new password"
+                        {...field}
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -90,7 +103,9 @@ function Page() {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-white">Confirm Password:</FormLabel>
+                    <FormLabel className="text-white">
+                      Confirm Password:
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="password"

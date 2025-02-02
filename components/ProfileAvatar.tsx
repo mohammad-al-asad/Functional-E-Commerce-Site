@@ -19,6 +19,7 @@ function ProfileAvatar({ user, setUser }: { user: any; setUser: any }) {
     try {
       if (avatar) {
         const avatarUrl = await uploadAvatar(avatar);
+        
         setUser({ ...user, avatar: avatarUrl });
         toast({
           title: "Avatar updated succesfuly",
@@ -42,7 +43,7 @@ function ProfileAvatar({ user, setUser }: { user: any; setUser: any }) {
       <div className="w-[70px] h-[70px]">
       <Image
         fill
-        className="rounded-full object-fill"
+        className="rounded-full object-fill border-2"
         src={user?.avatar}
         alt={user?.name}
       />

@@ -11,6 +11,7 @@ import { Button } from "./ui/button";
 import { RootState } from "@/lib/redux";
 import { useSelector } from "react-redux";
 import Image from "next/image";
+import { Input } from "./ui/input";
 
 function Header() {
   const [search, setSearch] = useState<string>("");
@@ -23,8 +24,8 @@ function Header() {
   };
 
   return (
-    <div className="bg-main flex p-2 justify-center items-center gap-8">
-      <div className="flex">
+    <div className="bg-main grid grid-rows-3 lg:gap-4 lg:grid-rows-1 lg:grid-cols-3 place-items-center p-4 justify-around items-center fixed top-0 w-full z-50">
+      <div className="flex w-[300px]">
         <div className="w-max h-full p-4 pr-1">
           <h1 className="text-red-600 font-[1000] text-3xl">|</h1>
         </div>
@@ -36,32 +37,34 @@ function Header() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative h-12 w-1/2">
-        <input
+      <div className="relative h-12 w-full hidden lg:inline-grid">
+        <Input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search in The Commerce"
-          className="w-full h-full p-2 pr-14 rounded-lg focus:outline-none"
+          className="w-full h-full rounded-lg pr-14"
         />
         <Button
+          onSubmit={handleSubmit}
           type="submit"
           className="absolute top-[4px] right-[4px] bg-red-600 hover:bg-red-400 text-white h-10 w-10 grid place-items-center rounded-lg"
         >
           <FaSearch />
         </Button>
-      </form>
-      <div className="flex gap-4">
+      </div>
+
+      <div className="flex justify-around gap-4 w-[300px]">
         {user ? (
           //  For user //
           <Link
             href="/profile"
             className="flex justify-center items-center gap-1.5 text-white"
           >
-            <div className="w-[38px] h-[38px] relative">
+            <div className="w-[36px] h-[36px] relative">
               <Image
                 fill
-                className="rounded-full object-fill"
+                className="rounded-full object-fill border-2"
                 src={user.avatar}
                 alt={user.name}
               />
@@ -109,6 +112,23 @@ function Header() {
         >
           <IoCartOutline size={30} />
         </Link>
+      </div>
+
+      <div className="relative h-12 w-full lg:hidden">
+        <Input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search in The Commerce"
+          className="w-full h-full rounded-lg pr-14"
+        />
+        <Button
+          onSubmit={handleSubmit}
+          type="submit"
+          className="absolute top-[4px] right-[4px] bg-red-600 hover:bg-red-400 text-white h-10 w-10 grid place-items-center rounded-lg"
+        >
+          <FaSearch />
+        </Button>
       </div>
     </div>
   );

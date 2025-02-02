@@ -10,7 +10,7 @@ function ProductCard({ product }: { product: any }) {
       href={`/product/${product.$id}`}
       className="group/card hover:scale-[1.015] transition-all h-auto flex flex-col items-center justify-between rounded-md bg-white"
     >
-      <div className="relative my-4 w-[170px] h-[150px]">
+      <div className="relative my-4 w-[150px] h-[120px]">
         <Image
           className="mix-blend-multiply"
           priority
@@ -20,10 +20,10 @@ function ProductCard({ product }: { product: any }) {
         />
       </div>
       <div className="w-full h-[43%] flex justify-around flex-col p-3 bg-main text-white rounded-b-md">
-        <h1 className="text-sm font-semibold line-clamp-2 mb-1 group/edit group-hover/card:text-blue-500">
+        <h1 className="text-sm font-semibold line-clamp-2 group/edit group-hover/card:text-blue-500">
           {product.title}
         </h1>
-        <p className="text-sm text-gray-500 line-clamp-1 ">{product.description}</p>
+        <p className="text-sm text-gray-500 hidden md: line-clamp-1 ">{product.description}</p>
         <Rating rating={product.rating} />
         <h1 className="font-semibold text-price">{`$${product.price}`}</h1>
       </div>
