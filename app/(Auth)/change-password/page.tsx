@@ -69,8 +69,8 @@ function Page() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-800">
-      <div className="w-[28%] bg-main px-9 py-12 rounded-2xl m-auto">
-        <h1 className="text-3xl block text-red-500 font-extrabold mb-2">
+      <div className="w-[350px] lg:w-[500px] md:w-[400px] bg-main px-9 py-12 rounded-2xl m-auto">
+        <h1 className="text-3xl text-red-500 font-extrabold mb-2">
           Password Reset
         </h1>
         <Form {...form}>

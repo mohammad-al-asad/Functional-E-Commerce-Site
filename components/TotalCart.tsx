@@ -16,12 +16,25 @@ function TotalCart() {
   const dispatch = useDispatch<AppDispatch>();
   const authUser: any = useSelector((state: RootState) => state.auth.user);
   const cartItems = useSelector((state: RootState) => state.cart.cart);
+  const [subtotal, setSubtotal] = useState(0);
+
+  const shipping = 100;
+  const selectedCartItems = React.useMemo(() => {
+    return cartItems?.filter((item) => item.isSelected) || [];
+  }, [cartItems]);
 
   useEffect(() => {
     setUser(authUser);
-  }, [authUser]);
+    let newSubtotal = 0;
+    selectedCartItems.forEach((item) => {
+      console.log(item.product.price);
+
+      newSubtotal += item.product.price * item.count;
+    });
+    setSubtotal(parseFloat(newSubtotal.toFixed(2)));
+  }, [authUser, selectedCartItems]);
   return (
-    <div className="w-[35%] h-fit bg-main text-white p-6 text-sm rounded-lg">
+    <div className="h-fit bg-main lg:mt-5 self-start text-white p-6 text-sm rounded-lg w-[373px] md:w-full lg:w-[600px]">
       <p className="mb-2">Total</p>
 
       <AddressForm user={user} setUser={setUser} />
@@ -29,13 +42,13 @@ function TotalCart() {
       <div className="space-y-3">
         <h2 className="text-lg font-semibold">Order Summary</h2>
         <div className="flex justify-between">
-          <p>Subtotal (0 items)</p>
-          <p className="font-semibold">$ 0</p>
+          <p>Subtotal ({selectedCartItems.length} items)</p>
+          <p className="font-semibold">$ {subtotal}</p>
         </div>
 
         <div className="flex justify-between">
           <p>Shiping Fee</p>
-          <p className="font-semibold">$ 0</p>
+          <p className="font-semibold">$ {shipping}</p>
         </div>
 
         <form>
@@ -53,7 +66,7 @@ function TotalCart() {
 
         <div className="flex justify-between">
           <p>Total</p>
-          <p className="font-semibold">$ 0</p>
+          <p className="font-semibold">$ {subtotal + shipping}</p>
         </div>
         <Button
           onClick={() => {
@@ -62,10 +75,6 @@ function TotalCart() {
                 title: "There is no cart to checkout",
               });
             } else {
-              let selectedCartItems: any[] = [];
-              cartItems.forEach((item): any =>
-                item.isSelected ? selectedCartItems.push(item) : null
-              );
               dispatch(putItems(selectedCartItems));
               router.push("/checkout");
             }

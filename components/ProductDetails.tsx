@@ -33,13 +33,15 @@ function ProductDetails({ product }: { product: any }) {
     }
   }
   return (
-    <div className="grid grid-cols-2 w-[70%] text-white bg-main p-3">
-      <div className="relative mr-3 bg-white rounded-md">
+    <div className="grid grid-rows-2 gap-3 lg:grid-rows-1 lg:grid-cols-2 w-full md:w-[50%] lg:w-70% text-white bg-main p-3 rounded-lg">
+
+      <div className="relative bg-white rounded-md w-[350px] h-[300px] lg:w-full lg:h-full">
         <Image className="p-4" src={product.image} alt={product.title} fill />
       </div>
-      <div className="my-auto p-4">
+
+      <div className="my-auto p-4 w-[350px] lg:w-full">
         <h1 className="text-xl font-semibold">{product.title}</h1>
-        <p className="my-3 line-clamp-6">{product.description}</p>
+        <p className="my-3 line-clamp-5">{product.description}</p>
         <Rating rating={product.rating} />
 
         <h1 className="text-main text-3xl font-semibold">{`$${product.price}`}</h1>

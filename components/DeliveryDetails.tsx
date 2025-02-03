@@ -14,7 +14,7 @@ function DeliveryDetails() {
       setUser(authUser);
     }, [authUser]);
   return (
-    <div className="w-[30%] bg-main text-white ml-5 rounded-lg p-5 text-sm">
+    <div className="w-full bg-main text-white md:w-[45%] lg:w-[30%] h-fit rounded-lg p-5 text-sm">
         <p className="mb-3">Delivery</p>
       <div>
         <AddressForm user={user} setUser={setUser}/>

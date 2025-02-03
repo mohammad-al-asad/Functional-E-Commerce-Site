@@ -1,5 +1,6 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import ProductGroup from "./ProductGroup";
 
 function Result({
   filteredProduct,
@@ -9,11 +10,9 @@ function Result({
   query: any;
 }) {
   return (
-    <div className="px-10">
+    <div className="p-4 lg:p-8">
       <h1 className="py-3 text-white font-[400]">{`${filteredProduct.length} items found for`} &quot;<span className="text-red-400 font-semibold">{query}</span>&quot;</h1>
-      <div className="grid grid-cols-5 gap-5">
-      {filteredProduct.map((item:any,index:number)=><ProductCard product={item} key={index}/>)}
-      </div>
+      <ProductGroup products={filteredProduct}/>
     </div>
   );
 }

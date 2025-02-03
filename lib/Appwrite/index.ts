@@ -1,4 +1,12 @@
-import { Client, Databases, Account, ID, Avatars, Storage } from "appwrite";
+import {
+  Client,
+  Databases,
+  Account,
+  ID,
+  Avatars,
+  Storage,
+  Query,
+} from "appwrite";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUser, setUser } from "../redux/AuthSlice";
 import { fetchCart } from "../redux/CartSlice";
@@ -36,6 +44,11 @@ export default function useAppwrite() {
         upazila,
         fullAddress,
       } = await databases.getDocument(db, userCollection, user.$id);
+
+      const { documents:orders } = await databases.listDocuments(db, orderCollection, [
+        Query.equal("userId", user.$id),
+      ]);
+      
       dispatch(
         setUser({
           ...user,
@@ -47,6 +60,7 @@ export default function useAppwrite() {
           district,
           upazila,
           fullAddress,
+          orders
         })
       );
       dispatch(fetchCart(user.$id));

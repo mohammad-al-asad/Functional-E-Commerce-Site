@@ -1,7 +1,7 @@
 "use client";
 import AddressForm from "@/components/AddressForm";
 import CheckoutItem from "@/components/CheckoutItem";
-import NotFound from "@/components/NotFound";
+import NotFound from "@/components/utility/NotFound";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -54,11 +54,11 @@ function Page() {
   let shippingFee: number = 100;
   if (selectedCarts.length === 0) return <NotFound text="No product found" />;
   return (
-    <div className="bg-main w-2/3 mx-auto rounded-md mt-4 flex flex-col justify-center relative h-[650px]">
+    <div className="bg-main m-auto w-[96%] lg:w-2/3 rounded-md mt-4 flex flex-col justify-center relative h-[650px]">
       <div className="text-white bg-gray-800 px-8 py-5 text-2xl font-bold mb-6 rounded-t-md">
         Checkout Now
       </div>
-      <div className="text-white mb-1 px-8">
+      <div className="text-white mb-1 px-5 md:px-8">
         <AddressForm user={user} setUser={setUser} />
         <div className="flex items-center gap-2">
           <Input className="w-5" type="radio" checked={true} />
@@ -66,24 +66,24 @@ function Page() {
         </div>
       </div>
 
-      <h1 className="text-white text-lg font-semibold mb-3 px-8">All Items:</h1>
-      <div className="h-80 border-2 p-4 overflow-x-hidden overflow-y-auto custom-scrollbar mx-8">
+      <h1 className="text-white text-lg font-semibold mb-3 p-2 md:px-6">All Items:</h1>
+      <div className="h-[400px] border-2 p-2 overflow-x-hidden overflow-y-auto custom-scrollbar mx-4 md:mx-8">
         {selectedCarts.map((cart: any) => {
           subtotal += cart.product.price * cart.count;
           return <CheckoutItem key={cart.product.$id} cart={cart} />;
         })}
       </div>
-      <h3 className="text-white text-lg font-semibold flex justify-end pt-3 pr-8">
-        <p className="mr-40">Subtotal:</p>
-        <p className="w-14">{subtotal}</p>
+      <h3 className="text-white text-sm md:text-lg md:pr-16 font-semibold flex justify-end pt-3 pr-12 text-right">
+        <p className="mr-20">Subtotal:</p>
+        <p className="w-20">{parseFloat(subtotal.toFixed(2))}</p>
       </h3>
-      <h3 className="text-white text-lg font-semibold flex justify-end pt-2 pr-8 mb-2">
-        <p className="mr-40">Shipping:</p>
-        <p className="w-14">{"100"}</p>
+      <h3 className="text-white text-sm md:text-lg md:pr-16 font-semibold flex justify-end pt-2 pr-12 mb-2 text-right">
+        <p className="mr-20">Shipping:</p>
+        <p className="w-20">{"100"}</p>
       </h3>
-      <div className="bg-gray-800 w-full flex justify-end p-3 rounded-b-md">
+      <div className="bg-gray-800 w-full flex justify-between p-3 md:px-5 rounded-b-md">
         <h3 className="text-white text-lg font-semibold mr-10 my-auto">
-          Total: <span className="text-red-500">{subtotal + shippingFee}</span>
+          Total: <span className="text-red-500">{parseFloat(subtotal.toFixed(2)) + shippingFee}</span>
         </h3>
         <Button className="bg-red-600 hover:bg-red-400" onClick={checkout}>
           Place Order

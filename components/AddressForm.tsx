@@ -283,8 +283,17 @@ function AddressForm({ user, setUser }: { user: any; setUser: any }) {
       <div className="flex gap-1 items-center">
         <IoLocationOutline size={20} className="text-white" />
         <div className="p-2 text-base text-gray-200">
-          <p>{`${user?.division}, ${user?.district}, ${user?.upazila}`}</p>
-          <p>{user?.fullAddress}</p>
+          {user?(
+            <>
+            <p>{`${user?.division}, ${user?.district}, ${user?.upazila}`}</p>
+            <p>{user?.fullAddress}</p>
+            </>
+          ):(
+            <>
+            <p>Dhaka, Gazipur, Gazipur Sadar</p>
+            <p>Natianal University</p>
+            </>
+          )}
         </div>
       </div>
     </div>

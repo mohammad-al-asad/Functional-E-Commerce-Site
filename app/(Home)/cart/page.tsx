@@ -16,7 +16,7 @@ useEffect(() => {
 }, [router, user]);
 
   return (
-    <div className="p-8 mx-24 flex justify-between h-[650px]">
+    <div className="p-2 md:p-6 flex flex-wrap items-center justify-center gap-4">
       <CartItems/>
       <TotalCart/>
     </div>

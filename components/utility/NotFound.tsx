@@ -5,10 +5,10 @@ import notFound from "@/public/notFound.png"
 function NotFound({text}:{text:string}) {
   return (
     <div className='flex justify-center items-center flex-col my-[14%]'>
-        <div className='relative w-20 h-20  flex justify-center items-center border-red-600 border-1 rounded-full'>
+        <div className='relative w-[70px] h-[70px]  flex justify-center items-center border-red-600 border-1 rounded-full'>
         <Image className='' fill src={notFound} alt='Not Found'/>
         </div>
-        <p className='text-white mt-2'>{text}</p>
+        <p className='text-white mt-2'>{text} !</p>
     </div>
   )
 }

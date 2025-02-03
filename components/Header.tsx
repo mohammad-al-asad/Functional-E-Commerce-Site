@@ -20,6 +20,7 @@ function Header() {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    if (search.length < 2) return;
     router.push(`/search/${search}`);
   };
 
@@ -46,7 +47,7 @@ function Header() {
           className="w-full h-full rounded-lg pr-14"
         />
         <Button
-          onSubmit={handleSubmit}
+          onClick={handleSubmit}
           type="submit"
           className="absolute top-[4px] right-[4px] bg-red-600 hover:bg-red-400 text-white h-10 w-10 grid place-items-center rounded-lg"
         >
@@ -123,7 +124,7 @@ function Header() {
           className="w-full h-full rounded-lg pr-14"
         />
         <Button
-          onSubmit={handleSubmit}
+          onClick={handleSubmit}
           type="submit"
           className="absolute top-[4px] right-[4px] bg-red-600 hover:bg-red-400 text-white h-10 w-10 grid place-items-center rounded-lg"
         >

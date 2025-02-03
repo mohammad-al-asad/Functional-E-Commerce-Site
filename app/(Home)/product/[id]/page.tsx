@@ -23,7 +23,7 @@ function Product() {
           There was an error.
         </h2>
       ) : (
-        <div className="flex m-10 mb-0">
+        <div className="flex flex-wrap gap-2 mt-8 mb-0 justify-center">
           <ProductDetails product={singleData} />
           <DeliveryDetails />
         </div>
