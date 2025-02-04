@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Modal } from "@/components/Modal";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { emailSchema, passwordSchema, usernameSchema } from "@/schemas/sign-up";
+import { emailSchema, passwordSchema } from "@/schemas/sign-up";
 import { account } from "@/lib/Appwrite";
 import { Button } from "./ui/button";
 import { FiEdit3 } from "react-icons/fi";

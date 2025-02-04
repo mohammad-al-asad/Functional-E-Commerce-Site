@@ -27,14 +27,12 @@ function TotalCart() {
     setUser(authUser);
     let newSubtotal = 0;
     selectedCartItems.forEach((item) => {
-      console.log(item.product.price);
-
       newSubtotal += item.product.price * item.count;
     });
     setSubtotal(parseFloat(newSubtotal.toFixed(2)));
   }, [authUser, selectedCartItems]);
   return (
-    <div className="h-fit bg-main lg:mt-5 self-start text-white p-6 text-sm rounded-lg w-[373px] md:w-full lg:w-[600px]">
+    <div className="h-fit bg-main lg:mt-5 self-start text-white p-6 text-sm rounded-lg w-full lg:w-[600px]">
       <p className="mb-2">Total</p>
 
       <AddressForm user={user} setUser={setUser} />

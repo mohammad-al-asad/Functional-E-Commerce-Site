@@ -10,8 +10,6 @@ import ProfilePhone from "@/components/ProfilePhone";
 import ChangePassword from "@/components/ChangePassword";
 import ProfileAvatar from "@/components/ProfileAvatar";
 import AdressForm from "@/components/AddressForm";
-import { databases, db, orderCollection } from "@/lib/Appwrite";
-import { Query } from "appwrite";
 import NotFound from "@/components/utility/NotFound";
 
 function Page() {
@@ -27,12 +25,12 @@ function Page() {
   }, [authUser, router]);
 
   return (
-    <div className="bg-main w-full md:w-[90%] lg:w-[60%] md:mt-10 md:rounded-lg mx-auto p-8 h-screen md:h-fit flex flex-col justify-center relative">
+    <div className="bg-main w-full md:w-[90%] lg:w-[75%] md:mt-10 md:rounded-lg mx-auto p-8 h-screen md:h-fit flex flex-col justify-center relative">
       <ProfileAvatar user={user} setUser={setUser} />
 
       <ProfileName user={user} setUser={setUser} />
 
-      <ChangePassword user={user} setUser={setUser} />
+      <ChangePassword user={user} />
 
       <div className="grid grid-rows-2 md:grid-cols-2 md:grid-rows-none  lg:p-5">
         <div className="w-fit">
@@ -54,7 +52,10 @@ function Page() {
             <div className="overflow-auto custom-scrollbar h-[200px]">
               {user?.orders && user.orders.length != 0 ? (
                 user.orders.map((item: any) => (
-                  <div className="flex text-xs p-2 my-2 bg-gray-800 rounded">
+                  <div
+                    key={item.$id}
+                    className="flex text-xs p-2 my-2 bg-gray-800 rounded"
+                  >
                     <h3 className="w-40 truncate">{item.$id}</h3>
                     <h3 className="w-16 truncate">{item.totalPrice}</h3>
                     <h3 className="w-16 truncate">{item.status}</h3>

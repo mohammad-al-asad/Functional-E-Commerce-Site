@@ -144,7 +144,7 @@ function AddressForm({ user, setUser }: { user: any; setUser: any }) {
                         <FormControl>
                           <Input
                             className="text-main"
-                            placeholder="Enter your Full-Name"
+                            placeholder="Full-Name"
                             {...field}
                           />
                         </FormControl>
@@ -259,7 +259,7 @@ function AddressForm({ user, setUser }: { user: any; setUser: any }) {
                         <FormControl>
                           <Input
                             className="text-main"
-                            placeholder="Village/Road/Places"
+                            placeholder="Village/Road"
                             {...field}
                           />
                         </FormControl>

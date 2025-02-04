@@ -8,7 +8,7 @@ import {
 } from "@/lib/redux/CartSlice";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ function SingleCart({ cartItem }: { cartItem: any }) {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   return (
-    <div className="mb-1 bg-gray-800 p-3 rounded-sm w-[345px] md:w-full lg:w-[600px]">
+    <div className="mb-1 bg-gray-900 p-3 rounded-sm w-full">
       <div className="flex items-center gap-4">
         <div className="flex gap-2">
           <Input

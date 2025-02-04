@@ -18,6 +18,7 @@ export const db = "67807181002769121b8d";
 export const bucketId = "67939c92002945e72ece";
 export const userCollection = "6790fe4a003a031fb5c8";
 export const orderCollection = "679b4f53003d7ba118b6";
+export const productCollection = "678071e2002d6fc2a823"
 const client = new Client()
   .setEndpoint("https://cloud.appwrite.io/v1")
   .setProject("678070960035ca902a14");

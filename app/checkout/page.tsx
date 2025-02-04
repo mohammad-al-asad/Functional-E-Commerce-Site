@@ -55,7 +55,7 @@ function Page() {
   if (selectedCarts.length === 0) return <NotFound text="No product found" />;
   return (
     <div className="bg-main m-auto w-[96%] lg:w-2/3 rounded-md mt-4 flex flex-col justify-center relative h-[650px]">
-      <div className="text-white bg-gray-800 px-8 py-5 text-2xl font-bold mb-6 rounded-t-md">
+      <div className="text-white bg-gray-700 px-8 py-5 text-2xl font-bold mb-6 rounded-t-md">
         Checkout Now
       </div>
       <div className="text-white mb-1 px-5 md:px-8">
@@ -81,7 +81,7 @@ function Page() {
         <p className="mr-20">Shipping:</p>
         <p className="w-20">{"100"}</p>
       </h3>
-      <div className="bg-gray-800 w-full flex justify-between p-3 md:px-5 rounded-b-md">
+      <div className="bg-gray-700 w-full flex justify-between p-3 md:px-5 rounded-b-md">
         <h3 className="text-white text-lg font-semibold mr-10 my-auto">
           Total: <span className="text-red-500">{parseFloat(subtotal.toFixed(2)) + shippingFee}</span>
         </h3>

@@ -4,7 +4,7 @@ import React from "react";
 function CheckoutItem({ cart }: { cart: any }) {
   return (
     <div className="md:text-lg flex justify-between items-center mb-1 rounded-sm p-2 md:p-4 bg-gray-900 text-white h-24">
-      <div className="bg-white mr-3 rounded-sm w-[100px] h-[70px] relative">
+      <div className="bg-white mr-3 rounded-sm w-[60px] h-[60px] md:w-[70px] md:h-[70px] relative">
         <Image
           className="p-1"
           src={cart.product.image}

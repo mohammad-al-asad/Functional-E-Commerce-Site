@@ -1,31 +1,23 @@
-"use client";
-import useProduct from "@/hooks/useProduct";
-import { useParams } from "next/navigation";
-import Result from "@/components/Result";
-import React, { useEffect, useRef } from "react";
-import Loadder from "@/components/utility/Loadder";
+import { Query } from "appwrite";
+import React from "react";
+import ProductGroup from "@/components/ProductGroup";
+import { databases, db, productCollection } from "@/lib/Appwrite";
+import SearchCounter from "@/components/utility/SearchCounter";
 
-function Query() {
-  const { query } = useParams();
-  const { filteredData, getFilteredData, loading, error } = useProduct();
-  const ref = useRef(getFilteredData);
-  useEffect(() => {
-    ref.current(query.toString());
-  }, [ref, query]);
+function Page({ params }: { params: any }) {
+
+  const res = databases.listDocuments(db, productCollection, [
+    Query.search("title", params.query as string),
+  ]);
 
   return (
     <div className="p-2">
-      {loading ? (
-        <Loadder />
-      ) : error ? (
-        <h2 className="text-center text-xl font-bold text-white">
-          There was an error.
-        </h2>
-      ) : (
-        <Result filteredProduct={filteredData} query={query} />
-      )}
+      <div className="p-4 lg:p-8">
+        <SearchCounter res={res} query={params.query} />
+        <ProductGroup res={res} />
+      </div>
     </div>
   );
 }
 
-export default Query;
+export default Page;

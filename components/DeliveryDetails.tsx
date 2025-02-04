@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from "react";
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiMoneyWithdraw } from "react-icons/bi";
