@@ -9,6 +9,7 @@ function ProductGroup({ res }: { res: any }) {
     res.then((value: any) => setProducts(value.documents));
   }, [res]);
 
+  if (!products || products.length === 0) return <NotFound text="No product found" />;
   if (products)
     return (
       <div className="grid grid-cols-2 lg:grid-cols-5 md:grid-cols-4 gap-y-6 gap-x-4">
@@ -17,7 +18,6 @@ function ProductGroup({ res }: { res: any }) {
         })}
       </div>
     );
-  if (!products || products.length === 0) return <NotFound text="No product found" />;
 }
 
 export default ProductGroup;

@@ -39,6 +39,12 @@ function ProductDetails({ res }: { res: any }) {
       });
     }
   }
+  if (!product)
+    return (
+      <div className="bg-gray-800 w-full h-full absolute top-0">
+        <NotFound text="Product not found" />
+      </div>
+    );
   if (product)
     return (
       <div className="grid grid-rows-2 place-items-center gap-3 lg:grid-rows-1 lg:grid-cols-2 w-fit md:w-[50%] lg:w-[65%] text-white bg-main p-3 rounded-lg">
@@ -88,12 +94,6 @@ function ProductDetails({ res }: { res: any }) {
             </Button>
           </div>
         </div>
-      </div>
-    );
-  if (!product)
-    return (
-      <div className="bg-gray-800 w-full h-full absolute top-0">
-        <NotFound text="Product not found" />
       </div>
     );
 }
