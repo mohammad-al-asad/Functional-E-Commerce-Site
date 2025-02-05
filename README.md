@@ -33,11 +33,11 @@ Go Live: https://the-commerce.onrender.com
 11. Cheackout page
     <br/>
     <br/>
-    <img width="300" height="150" src="./public/home.png">
-    <img width="300" height="150" src="./public/cart.png">
+    <img width="350" height="200" src="./public/home.png">
+    <img width="350" height="200" src="./public/cart.png">
     <br/>
-    <img width="300" height="150" src="./public/cart.png">
-    <img width="300" height="150" src="./public/profile.png">
+    <img width="350" height="200" src="./public/cart.png">
+    <img width="350" height="200" src="./public/profile.png">
     <br/>
-    <img width="300" height="150" src="./public/checkout.png">
-    <img width="300" height="150" src="./public/search.png">
+    <img width="350" height="200" src="./public/checkout.png">
+    <img width="350" height="200" src="./public/search.png">
