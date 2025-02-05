@@ -1,4 +1,4 @@
-#The Commerce
+<h1>The Commerce</h1>
 
 This is a production ready Responsive Multi-functional E-Commerce site.
 
