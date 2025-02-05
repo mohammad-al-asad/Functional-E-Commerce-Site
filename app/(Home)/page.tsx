@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <div className="p-5 lg:p-12">
-      <h2 className="font-bold text-2xl md:text-3xl my-3 text-center text-white bg-red-600">
+      <h2 className="font-bold md:text-3xl text-2xl my-5 text-center text-white bg-main border-b-8 p-4 md:p-6 rounded-t-md">
         Our Products
       </h2>
       <ProductGroup res={res} />

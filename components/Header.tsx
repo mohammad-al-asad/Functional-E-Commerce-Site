@@ -25,7 +25,7 @@ function Header() {
   };
 
   return (
-    <div className="bg-main grid grid-rows-3 lg:gap-4 lg:grid-rows-1 lg:grid-cols-3 place-items-center p-4 justify-around items-center fixed top-0 w-full z-50">
+    <div className="bg-main grid grid-rows-3 lg:gap-4 lg:grid-rows-1 lg:grid-cols-3 place-items-center p-4 justify-around items-center fixed top-0 w-full z-50 border-b-2 border-red-600">
       <div className="flex w-[300px]">
         <div className="w-max h-full p-4 pr-1">
           <h1 className="text-red-600 font-[1000] text-3xl">|</h1>
