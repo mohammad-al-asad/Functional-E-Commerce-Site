@@ -3,7 +3,7 @@
 This is a production ready Responsive Multi-functional E-Commerce site.
 
 Go Live: https://the-commerce.onrender.com
-
+<br/>
 <h3>Key Features</h3>
 
 1. Customizable profile page (Change Avatar,Email, Password etc.)
@@ -15,7 +15,6 @@ Go Live: https://the-commerce.onrender.com
 4. Performance optimization using Next js server side rendering (SSR)
 
 5. Managing global states using Redux Toolkit
-<br/>
 <h3>Pages</h3>
 
 6. Home page
